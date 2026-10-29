@@ -1,0 +1,19 @@
+services:
+  bot:
+    build: .
+    container_name: team-bot
+    env_file:
+      - .env
+    volumes:
+      # named volume не требует прав на host-каталог
+      - team-bot-data:/app/data
+    restart: unless-stopped
+    stop_grace_period: 30s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  team-bot-data:
